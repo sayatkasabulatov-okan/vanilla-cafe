@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vanilla — кофейня в Алматы</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --cream: #FFF8F0;
+  --warm: #F5E6D3;
+  --brown: #6B4226;
+  --dark: #2C1810;
+  --gold: #C8956C;
+  --accent: #D4A574;
+  --text: #3D2B1F;
+  --light-text: #8B7355;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+  background: var(--cream);
+  overflow-x: hidden;
+}
+
+/* ===== HERO ===== */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 700px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background:
+    linear-gradient(160deg, rgba(44,24,16,0.7) 0%, rgba(107,66,38,0.5) 50%, rgba(44,24,16,0.8) 100%),
+    url('img/hero.jpg') center/cover no-repeat;
+  color: #fff;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(to top, var(--cream), transparent);
+}
+
+.hero-content { position: relative; z-index: 2; padding: 0 24px; }
+
+.hero-badge {
+  display: inline-block;
+  padding: 8px 24px;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 50px;
+  font-size: 13px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+  backdrop-filter: blur(10px);
+  background: rgba(255,255,255,0.08);
+  animation: fadeDown 1s ease;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(56px, 10vw, 120px);
+  font-weight: 400;
+  line-height: 1;
+  margin-bottom: 8px;
+  animation: fadeUp 1s ease 0.2s both;
+}
+
+.hero h1 i { font-style: italic; color: var(--accent); }
+
+.hero-tagline {
+  font-size: clamp(16px, 2.5vw, 22px);
+  font-weight: 300;
+  opacity: 0.85;
+  margin-bottom: 48px;
+  letter-spacing: 1px;
+  animation: fadeUp 1s ease 0.4s both;
+}
+
+.hero-cta {
+  display: inline-flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  animation: fadeUp 1s ease 0.6s both;
+}
+
+.btn {
+  padding: 16px 40px;
+  border-radius: 50px;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-decoration: none;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary {
+  background: var(--gold);
+  color: #fff;
+  box-shadow: 0 4px 24px rgba(200,149,108,0.4);
+}
+
+.btn-primary:hover {
+  background: #d4a574;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(200,149,108,0.5);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.4);
+}
+
+.btn-ghost:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.7);
+}
+
+/* ===== NAV ===== */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 20px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.4s ease;
+}
+
+.nav.scrolled {
+  background: rgba(255,248,240,0.95);
+  backdrop-filter: blur(20px);
+  padding: 14px 48px;
+  box-shadow: 0 2px 30px rgba(44,24,16,0.08);
+}
+
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.nav.scrolled .nav-logo { color: var(--dark); }
+
+.nav-links { display: flex; gap: 32px; list-style: none; }
+
+.nav-links a {
+  color: rgba(255,255,255,0.8);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  transition: color 0.3s;
+}
+
+.nav.scrolled .nav-links a { color: var(--light-text); }
+.nav-links a:hover { color: var(--gold); }
+
+/* ===== SECTIONS ===== */
+section { padding: 100px 24px; }
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-label {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 400;
+  color: var(--dark);
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.section-desc {
+  font-size: 17px;
+  color: var(--light-text);
+  line-height: 1.7;
+  max-width: 560px;
+}
+
+/* ===== ABOUT ===== */
+.about {
+  background: var(--cream);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.about-img {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  aspect-ratio: 4/5;
+}
+
+.about-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(200,149,108,0.2);
+  border-radius: 24px;
+}
+
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.stat {
+  text-align: center;
+  padding: 24px 0;
+}
+
+.stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 40px;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: var(--light-text);
+  letter-spacing: 0.5px;
+}
+
+/* ===== MENU ===== */
+.menu {
+  background: var(--dark);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.menu::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40%;
+  height: 100%;
+  background: url('img/menu_bg.jpg') center/cover no-repeat;
+  opacity: 0.12;
+  mask-image: linear-gradient(to left, rgba(0,0,0,0.5), transparent);
+  -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.5), transparent);
+}
+
+.menu .section-label { color: var(--accent); }
+.menu .section-title { color: #fff; }
+.menu .section-desc { color: rgba(255,255,255,0.5); }
+
+.menu-cats {
+  display: flex;
+  gap: 12px;
+  margin: 48px 0 40px;
+  flex-wrap: wrap;
+}
+
+.menu-cat {
+  padding: 10px 28px;
+  border-radius: 50px;
+  font-size: 14px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: transparent;
+  color: rgba(255,255,255,0.6);
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: 'Inter', sans-serif;
+}
+
+.menu-cat.active, .menu-cat:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #fff;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.menu-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28px 32px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  transition: all 0.3s;
+}
+
+.menu-card:hover {
+  background: rgba(255,255,255,0.08);
+  transform: translateY(-2px);
+}
+
+.menu-card-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  margin-bottom: 4px;
+}
+
+.menu-card-desc {
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+}
+
+.menu-card-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: var(--accent);
+  white-space: nowrap;
+  margin-left: 24px;
+}
+
+/* ===== GALLERY ===== */
+.gallery { background: var(--cream); }
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 280px);
+  gap: 16px;
+  margin-top: 48px;
+}
+
+.gallery-item {
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.gallery-item:hover img { transform: scale(1.08); }
+.gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+
+/* ===== FEATURES ===== */
+.features { background: var(--warm); }
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-top: 56px;
+}
+
+.feature-card {
+  padding: 48px 36px;
+  background: var(--cream);
+  border-radius: 24px;
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.feature-card:hover { transform: translateY(-6px); }
+
+.feature-card-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 16px;
+  margin-bottom: 24px;
+}
+
+.feature-icon {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  background: var(--warm);
+  border-radius: 16px;
+  font-size: 28px;
+}
+
+.feature-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  margin-bottom: 12px;
+  color: var(--dark);
+}
+
+.feature-card p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--light-text);
+}
+
+/* ===== CONTACT ===== */
+.contact {
+  background: var(--cream);
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  margin-top: 48px;
+}
+
+.contact-info { display: flex; flex-direction: column; gap: 32px; }
+
+.contact-item h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  margin-bottom: 6px;
+  color: var(--dark);
+}
+
+.contact-item p {
+  font-size: 15px;
+  color: var(--light-text);
+  line-height: 1.6;
+}
+
+.contact-item a {
+  color: var(--gold);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.contact-item a:hover { color: var(--brown); }
+
+.contact-map {
+  border-radius: 24px;
+  overflow: hidden;
+  min-height: 400px;
+  background: var(--warm);
+}
+
+.contact-map iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  border: none;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  background: var(--dark);
+  color: rgba(255,255,255,0.4);
+  padding: 48px 24px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.footer-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.footer-line {
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+  margin: 20px auto;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .nav { padding: 16px 24px; }
+  .nav-links { display: none; }
+  .about-grid { grid-template-columns: 1fr; gap: 48px; }
+  .features-grid { grid-template-columns: 1fr; }
+  .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+  .gallery-item:nth-child(1) { grid-column: span 2; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .menu-grid { grid-template-columns: 1fr; }
+  section { padding: 72px 20px; }
+}
+
+@media (max-width: 500px) {
+  .gallery-grid { grid-template-columns: 1fr; }
+  .gallery-item:nth-child(1) { grid-column: span 1; }
+  .about-stats { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .stat-num { font-size: 28px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="#" class="nav-logo">Vanilla</a>
+  <ul class="nav-links">
+    <li><a href="#about">О нас</a></li>
+    <li><a href="#menu">Меню</a></li>
+    <li><a href="#gallery">Атмосфера</a></li>
+    <li><a href="#contact">Контакты</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Specialty Coffee &bull; Almaty</div>
+    <h1><i>Vanilla</i></h1>
+    <p class="hero-tagline">Кофейня, где каждый глоток — момент счастья</p>
+    <div class="hero-cta">
+      <a href="#menu" class="btn btn-primary">Наше меню</a>
+      <a href="#contact" class="btn btn-ghost">Найти нас</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img reveal" style="position:relative;">
+        <img src="img/about.jpg" alt="Vanilla Coffee" loading="lazy">
+        <img src="img/about2.jpg" alt="Латте-арт" loading="lazy" style="position:absolute; bottom:-32px; right:-32px; width:180px; height:180px; object-fit:cover; border-radius:20px; border:6px solid var(--cream); box-shadow:0 12px 40px rgba(44,24,16,0.15);">
+      </div>
+      <div class="reveal">
+        <span class="section-label">Наша история</span>
+        <h2 class="section-title">Место, где рождается вкус</h2>
+        <p class="section-desc">
+          Vanilla — это больше, чем кофейня. Это пространство, где утренний ритуал превращается в искусство. Мы обжариваем зерно из Эфиопии, Колумбии и Бразилии, чтобы каждая чашка рассказывала свою историю.
+        </p>
+        <p class="section-desc" style="margin-top: 16px;">
+          Уютная атмосфера Алматы, аромат свежей выпечки и бариста, которые знают вас по имени — всё это Vanilla.
+        </p>
+        <div class="about-stats">
+          <div class="stat">
+            <div class="stat-num">7+</div>
+            <div class="stat-label">Лет с вами</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">12K</div>
+            <div class="stat-label">Чашек в месяц</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">4.9</div>
+            <div class="stat-label">Рейтинг 2GIS</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu" id="menu">
+  <div class="container">
+    <span class="section-label">Меню</span>
+    <h2 class="section-title">Выберите свой вкус</h2>
+    <p class="section-desc">Зерно specialty-класса, авторские напитки и свежая выпечка каждое утро</p>
+
+    <div class="menu-cats">
+      <button class="menu-cat active">Кофе</button>
+      <button class="menu-cat">Авторские</button>
+      <button class="menu-cat">Чай</button>
+      <button class="menu-cat">Выпечка</button>
+    </div>
+
+    <div class="menu-grid reveal">
+      <div class="menu-card">
+        <div>
+          <div class="menu-card-name">Эспрессо</div>
+          <div class="menu-card-desc">Классический, плотный, насыщенный</div>
+        </div>
+        <div class="menu-card-price">690 &#8376;</div>
+      </div>
+      <div class="menu-card">
+        <div>
+          <div class="menu-card-name">Капучино</div>
+          <div class="menu-card-desc">Бархатная пенка, идеальный баланс</div>
+        </div>
+        <div class="menu-card-price">1 290 &#8376;</div>
+      </div>
+      <div class="menu-card">
+        <div>
+          <div class="menu-card-name">Флэт Уайт</div>
+          <div class="menu-card-desc">Двойной шот, микропенка</div>
+        </div>
+        <div class="menu-card-price">1 490 &#8376;</div>
+      </div>
+      <div class="menu-card">
+        <div>
+          <div class="menu-card-name">Латте</div>
+          <div class="menu-card-desc">Нежный, сливочный, согревающий</div>
+        </div>
+        <div class="menu-card-price">1 390 &#8376;</div>
+      </div>
+      <div class="menu-card">
+        <div>
+          <div class="menu-card-name">Vanilla Signature</div>
+          <div class="menu-card-desc">Наш фирменный с ванильным сиропом</div>
+        </div>
+        <div class="menu-card-price">1 690 &#8376;</div>
+      </div>
+      <div class="menu-card">
+        <div>
+          <div class="menu-card-name">Раф Лавандовый</div>
+          <div class="menu-card-desc">Сливки, лаванда, ваниль</div>
+        </div>
+        <div class="menu-card-price">1 790 &#8376;</div>
+      </div>
+      <div class="menu-card">
+        <div>
+          <div class="menu-card-name">V60 Pour Over</div>
+          <div class="menu-card-desc">Фильтр-кофе, зерно на выбор</div>
+        </div>
+        <div class="menu-card-price">1 490 &#8376;</div>
+      </div>
+      <div class="menu-card">
+        <div>
+          <div class="menu-card-name">Круассан классический</div>
+          <div class="menu-card-desc">Хрустящий, маслянистый, свежий</div>
+        </div>
+        <div class="menu-card-price">890 &#8376;</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="container">
+    <span class="section-label">Атмосфера</span>
+    <h2 class="section-title">Почувствуйте Vanilla</h2>
+
+    <div class="gallery-grid">
+      <div class="gallery-item reveal">
+        <img src="img/g1.jpg" alt="Интерьер кофейни" loading="lazy">
+      </div>
+      <div class="gallery-item reveal">
+        <img src="img/g2.jpg" alt="Латте-арт" loading="lazy">
+      </div>
+      <div class="gallery-item reveal">
+        <img src="img/g3.jpg" alt="Бариста за работой" loading="lazy">
+      </div>
+      <div class="gallery-item reveal">
+        <img src="img/g4.jpg" alt="Уютное место" loading="lazy">
+      </div>
+      <div class="gallery-item reveal">
+        <img src="img/g5.jpg" alt="Выпечка и кофе" loading="lazy">
+      </div>
+      <div class="gallery-item reveal">
+        <img src="img/g6.jpg" alt="Десерт" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+  <div class="container">
+    <div style="text-align:center;">
+      <span class="section-label">Почему мы</span>
+      <h2 class="section-title">Больше, чем просто кофе</h2>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card reveal">
+        <img class="feature-card-img" src="img/f1.jpg" alt="Specialty зерно" loading="lazy">
+        <h3>Specialty зерно</h3>
+        <p>Зелёное зерно из лучших ферм мира. Обжариваем сами, каждую неделю — свежее не бывает.</p>
+      </div>
+      <div class="feature-card reveal">
+        <img class="feature-card-img" src="img/f2.jpg" alt="Свежая выпечка" loading="lazy">
+        <h3>Свежая выпечка</h3>
+        <p>Круассаны, эклеры и фокаччи — печём каждое утро. К 8:00 всё уже тёплое и хрустящее.</p>
+      </div>
+      <div class="feature-card reveal">
+        <img class="feature-card-img" src="img/f3.jpg" alt="Уютное пространство" loading="lazy">
+        <h3>Пространство</h3>
+        <p>Работайте, встречайтесь, читайте. Быстрый Wi-Fi, розетки у каждого стола, тихая зона.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="container">
+    <span class="section-label">Контакты</span>
+    <h2 class="section-title">Ждём вас</h2>
+
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <div class="contact-item">
+          <h4>Адрес</h4>
+          <p>Алматы, ул. Абая 52<br>Ориентир: напротив парка</p>
+        </div>
+        <div class="contact-item">
+          <h4>Режим работы</h4>
+          <p>Пн — Пт: 7:30 — 22:00<br>Сб — Вс: 9:00 — 23:00</p>
+        </div>
+        <div class="contact-item">
+          <h4>Связаться</h4>
+          <p>
+            <a href="tel:+77001234567">+7 700 123 45 67</a><br>
+            <a href="https://instagram.com/vanilla.almaty">@vanilla.almaty</a>
+          </p>
+        </div>
+        <div class="contact-item">
+          <h4>Забронировать столик</h4>
+          <p>Напишите в WhatsApp или позвоните — зарезервируем уютное место для вас</p>
+          <a href="https://wa.me/77001234567" class="btn btn-primary" style="margin-top: 16px; display: inline-block; font-size: 14px; padding: 14px 32px;">Написать в WhatsApp</a>
+        </div>
+      </div>
+      <div class="reveal" style="display:flex; flex-direction:column; gap:16px;">
+        <div class="contact-map" style="flex:1;">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2906.776!2d76.9286!3d43.2381!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDE0JzE3LjIiTiA3NsKwNTUnNDMuMCJF!5e0!3m2!1sru!2skz!4v1" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div style="border-radius:20px; overflow:hidden; height:200px;">
+          <img src="img/hero.jpg" alt="Vanilla Coffee" style="width:100%; height:100%; object-fit:cover;" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-logo">Vanilla</div>
+  <div class="footer-line"></div>
+  <p>&copy; 2026 Vanilla Coffee. Алматы, Казахстан</p>
+</footer>
+
+<script>
+// Navbar scroll effect
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// Reveal on scroll
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 100);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+
+reveals.forEach(el => observer.observe(el));
+
+// Menu category tabs (visual only)
+document.querySelectorAll('.menu-cat').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelector('.menu-cat.active').classList.remove('active');
+    btn.classList.add('active');
+  });
+});
+</script>
+
+</body>
+</html>
